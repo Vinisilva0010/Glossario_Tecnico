@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Glossário Técnico - Segurança da Informação</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-card: #020617;
+      --bg-card-alt: #020817;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.08);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: rgba(148, 163, 184, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 55%, #000 100%);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1100px;
+      background: linear-gradient(145deg, rgba(15,23,42,0.96), rgba(2,6,23,0.98));
+      border-radius: 24px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow:
+        0 40px 120px rgba(15, 23, 42, 0.85),
+        0 0 0 1px rgba(15, 23, 42, 0.5);
+      overflow: hidden;
+      backdrop-filter: blur(22px);
+    }
+
+    .header {
+      padding: 28px 28px 20px 28px;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.9);
+      background:
+        radial-gradient(circle at top left, rgba(34, 197, 94, 0.22), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.22), transparent 55%),
+        linear-gradient(135deg, #020617 0%, #020617 45%, #020617 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(148, 163, 184, 0.08), transparent 55%),
+        radial-gradient(circle at 100% 0%, rgba(15, 23, 42, 0.7), transparent 60%);
+      opacity: 0.9;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .header-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      padding: 4px 10px 4px 4px;
+      backdrop-filter: blur(10px);
+      align-self: flex-start;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: radial-gradient(circle, #22c55e 0, #16a34a 45%, #166534 100%);
+      box-shadow:
+        0 0 12px rgba(34, 197, 94, 0.9),
+        0 0 32px rgba(34, 197, 94, 0.75);
+    }
+
+    .title {
+      font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.2rem);
+      font-weight: 650;
+      letter-spacing: 0.02em;
+      color: #f9fafb;
+    }
+
+    .subtitle {
+      font-size: 0.92rem;
+      color: var(--muted);
+      max-width: 55rem;
+    }
+
+    .meta {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: rgba(148, 163, 184, 0.9);
+    }
+
+    .meta span {
+      opacity: 0.95;
+    }
+
+    .meta strong {
+      font-weight: 600;
+      color: #e5e7eb;
+    }
+
+    .content {
+      padding: 18px 22px 22px 22px;
+      background:
+        radial-gradient(circle at top left, rgba(34, 197, 94, 0.06), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.12), transparent 65%),
+        linear-gradient(165deg, #020617 0%, #020617 28%, #020617 100%);
+    }
+
+    .card {
+      border-radius: 18px;
+      border: 1px solid rgba(51, 65, 85, 0.85);
+      background:
+        radial-gradient(circle at top, rgba(15, 23, 42, 0.9), rgba(15,23,42,1) 55%),
+        linear-gradient(135deg, rgba(15,23,42,1), rgba(12, 19, 38, 1));
+      box-shadow:
+        0 18px 45px rgba(2, 6, 23, 0.95),
+        0 0 0 1px rgba(15, 23, 42, 0.8);
+      padding: 16px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(120deg,
+          rgba(34, 197, 94, 0.18),
+          rgba(37, 99, 235, 0.05),
+          rgba(34, 197, 94, 0.12)
+        );
+      mix-blend-mode: soft-light;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: radial-gradient(circle at top left, rgba(15,23,42,0.95), rgba(15,23,42,0.98));
+      padding: 12px 14px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #e5e7eb;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-title-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow:
+        0 0 10px rgba(34, 197, 94, 0.9),
+        0 0 26px rgba(34, 197, 94, 0.7);
+    }
+
+    .card-count {
+      font-size: 0.78rem;
+      color: var(--muted);
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.8);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .hint {
+      font-size: 0.8rem;
+      color: rgba(156, 163, 175, 0.9);
+      margin-bottom: 8px;
+    }
+
+    .hint strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .glossario-text {
+      width: 100%;
+      margin: 0;
+      padding: 10px 10px 8px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      background:
+        linear-gradient(135deg, rgba(15,23,42,0.98), rgba(15,23,42,1)),
+        radial-gradient(circle at top left, rgba(34, 197, 94, 0.08), transparent 60%);
+      color: #e5e7eb;
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.86rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      overflow: auto;
+      max-height: min(78vh, 1200px);
+      scrollbar-width: thin;
+      scrollbar-color: rgba(148, 163, 184, 0.9) rgba(15, 23, 42, 0.9);
+       font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+
+    .glossario-text .termo {
+  font-weight: 700;
+  color: #22c55e; /* verde destaque */
+}
+
+.glossario-text .def {
+  color: #e5e7eb;
+}
+
+    .glossario-text::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    .glossario-text::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .glossario-text::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, #22c55e, #16a34a);
+      border-radius: 999px;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 18px 10px;
+      }
+
+      .page {
+        border-radius: 18px;
+      }
+
+      .header {
+        padding: 18px 18px 12px 18px;
+      }
+
+      .content {
+        padding: 14px 14px 16px 14px;
+      }
+
+      .card {
+        padding: 12px 12px;
+      }
+
+      .card-inner {
+        padding: 10px 10px;
+      }
+
+      .glossario-text {
+        max-height: 70vh;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <div class="header-inner">
+        <div class="badge">
+          <span class="badge-dot"></span>
+          <span>Glossário Técnico · Segurança da Informação</span>
+        </div>
+        <h1 class="title">Glossário Técnico de Segurança da Informação</h1>
+        <p class="subtitle">
+          Lista com termos e explicações de segurança da informação em linguagem direta,
+          organizada em um único documento para estudo e consulta rápida.
+        </p>
+        <p class="meta">
+          <span>Autor do conteúdo: <strong>Vinícius da Silva Pontual</strong> · Formato original: PDF acadêmico</span>
+        </p>
+      </div>
+    </header>
+
+    <section class="content">
+      <article class="card" aria-label="Glossário de segurança da informação">
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-title">
+              <span class="card-title-dot"></span>
+              <span>Glossário completo</span>
+            </div>
+            <span class="card-count">~150 termos</span>
+          </div>
+          <p class="hint">
+            Conteúdo abaixo copiado <strong>integralmente</strong> do PDF original, sem alteração de nenhuma palavra.
+          </p>
+
+          <pre id="glossario" class="glossario-text">
+0-Day: Uma falha no codigo que ninguem sabia que existia, mas os atacantes acharam 
+primeiro e ja estão usando para invadir sistemas. 
+DDoS: Ataque de negação de serviço. É quando enviam tanta requisição falsa pro servidor 
+ao mesmo tempo que a maquina não aguenta processar e a API cai. 
+SQL Injection: Injeção de codigo no banco de dados. Acontece quando não tem filtro no 
+input do usuario e o invasor consegue rodar comandos direto no banco. 
+XSS: Cross Site Scripting. É injetar um script malicioso direto no frontend para rodar no 
+navegador do cliente e roubar dados da sessão dele. 
+Phishing: Criar paginas ou emails falsos com a interface de empresas reais para enganar o 
+usuario e fazer ele digitar login e senha. 
+Ransomware: Um malware que entra na maquina, criptografa o banco de dados inteiro e 
+cobra resgate em cripto para devolver a chave de acesso. 
+Malware: Qualquer software criado com a intenção de invadir, danificar ou roubar dados de 
+uma infraestrutura. 
+Firewall: Uma barreira configurada na rede para filtrar o trafego, bloqueando IPs e acessos 
+não autorizados antes que batam na aplicação. 
+WAF: Web Application Firewall. Um firewall focado na camada web que analisa as 
+requisições HTTP para travar tentativas de ataque direto na API. 
+Criptografia Simétrica: Metodo onde a mesma chave é usada para embaralhar os dados e 
+para desembaralhar. É rapida, mas se vazar a chave, compromete o banco todo. 
+Criptografia Assimétrica: Usa duas chaves diferentes. Uma publica para criptografar o 
+dado e uma privada para descriptografar. É a base de segurança do mercado de 
+criptomoedas. 
+Hash: Função que pega um texto de qualquer tamanho e transforma em um codigo fixo. 
+Não tem como reverter, é a unica forma segura de salvar senhas no banco. 
+Salting: Inserir caracteres aleatorios na senha antes de gerar o hash. Isso quebra a 
+estrategia de usar tabelas de senhas prontas para invadir contas. 
+Tokenização: Trocar uma informação sensivel por um token gerado aleatoriamente que não 
+serve para nada se for roubado do banco de dados. 
+JWT: JSON Web Token. Padrão para manter o usuario logado. O backend gera o token e o 
+frontend manda no header das proximas requisições para validar o acesso. 
+2FA: Autenticação de dois fatores. Uma camada a mais no login que exige um codigo 
+gerado no celular, não dependendo só da senha digitada. 
+Buffer Overflow: Quando o codigo tenta gravar mais dados na memoria do que o espaço 
+alocado, corrompendo o sistema. Linguagens como Rust evitam isso nativamente. 
+Race Condition: Falha de concorrencia. Quando duas requisições tentam alterar o mesmo 
+dado no exato mesmo milissegundo e o sistema executa lógicas duplicadas. 
+MITM: Man in the Middle. Um ataque onde o invasor entra no meio da conexão entre o 
+cliente e o servidor para interceptar e ler os pacotes de dados. 
+Payload: É o codigo malicioso em si. A parte do ataque que realmente executa a ação de 
+roubar dados ou alterar o sistema depois que a brecha é aberta. 
+Exploit: Um script criado especificamente para forçar uma vulnerabilidade no sistema e 
+abrir a porta para o ataque entrar. 
+Backdoor: Uma porta dos fundos criada no codigo para permitir acesso ao sistema depois, 
+pulando a tela de autenticação normal. 
+Trojan: Um programa que parece ser normal e util, mas que roda um codigo malicioso 
+escondido para infectar a maquina quando é executado.
+
+Keylogger: Um script que roda em segundo plano registrando tudo que o usuario digita no 
+teclado para capturar senhas e chaves. 
+Brute Force: Força bruta. Rodar um script testando milhares de senhas diferentes por 
+segundo em uma rota de login até acertar a correta. 
+Engenharia Social: Manipular quem tem acesso ao sistema para que a propria pessoa 
+passe as credenciais ou instale algo malicioso sem perceber. 
+Spoofing: Falsificar o IP ou o endereço de email para fazer o servidor achar que a 
+requisição esta vindo de uma fonte segura e liberar o acesso. 
+Honeypot: Um servidor falso criado com vulnerabilidades de proposito para atrair os 
+atacantes, analisar as rotas que eles tentam usar e bloquear os IPs. 
+Pentest: Teste de invasão. Contratar especialistas para tentarem hackear a propria 
+infraestrutura e reportar as falhas antes de subir para produção. 
+Red Team: A equipe de segurança da empresa que tem a função de atacar e tentar quebrar 
+a arquitetura do sistema constantemente. 
+Blue Team: A equipe de defesa que monitora o trafego, os logs e os dashboards para 
+identificar e travar os ataques. 
+CVE: Banco de dados publico que numera e documenta todas as vulnerabilidades de 
+segurança descobertas em softwares e bibliotecas. 
+Bug Bounty: Programa onde empresas pagam em dinheiro ou cripto para devs que 
+acharem e reportarem falhas de segurança nas aplicações delas. 
+Sandboxing: Rodar um processo dentro de um ambiente isolado. Se o codigo tentar fazer 
+merda, ele não tem permissão para acessar o resto do sistema. 
+VPN: Rede privada virtual que cria um tunel criptografado para esconder o trafego de dados 
+e o IP real da conexão. 
+Botnet: Rede de maquinas infectadas que recebem ordens de um atacante para fazer 
+ataques em massa de requisições contra um alvo. 
+Rootkit: Um malware que se instala no nivel mais profundo do sistema operacional, ficando 
+oculto dos processos normais e dificultando a remoção. 
+Endpoint: Qualquer dispositivo que acessa a rede da aplicação. Pode ser a maquina de um 
+dev ou um servidor na nuvem. 
+Zero Trust: Arquitetura de confiança zero. O sistema exige validação de credenciais em 
+todas as requisições, mesmo que o acesso venha de dentro da propria rede. 
+SOC: Centro de operações de segurança. O time e as telas que monitoram os logs e os 
+picos de trafego da infraestrutura em tempo real. 
+Patch: Atualização de codigo feita especificamente para fechar uma vulnerabilidade critica 
+encontrada em produção. 
+Rate Limiting: Limitar a quantidade de requisições que um mesmo IP pode fazer na API 
+para evitar span e travar bots de força bruta. 
+Ofuscação de Código: Alterar o codigo fonte para deixar ele ilegivel para humanos, 
+dificultando a engenharia reversa por parte de quem tenta invadir. 
+Memory Safety: Segurança de memoria. Regras da linguagem que não permitem acesso 
+invalido a espaços de memoria. É o foco principal ao programar em Rust. 
+CSRF: Falsificação de requisição entre sites. Forçar o navegador do usuario a rodar uma 
+requisição em um sistema onde a sessão dele ja esta logada e autenticada. 
+Chave Privada: O codigo criptografico que da acesso total aos fundos em uma carteira 
+cripto. Quem tem o controle da chave tem o controle do saldo. 
+Smart Contract: Contrato na blockchain. Como o codigo não pode ser alterado depois do 
+deploy, qualquer vulnerabilidade na logica resulta em perda irreversivel de fundos. 
+Prompt Injection: Enviar inputs manipulados para uma IA para quebrar o isolamento dela e 
+forçar a execução de comandos indevidos. 
+Logs: O registro em texto de todas as requisições e ações do sistema. Essencial para 
+analisar de onde o ataque veio e rastrear o comportamento da rede. 
+Payload Validation: Validar todos os dados que chegam na API antes de processar, 
+travando qualquer formato ou tipo de dado que não estava esperado na regra de negocio. 
+Autenticação: O sistema verificando quem você é na hora do login. É a rota da API que 
+bate o email e a senha no banco de dados para liberar a sessão e gerar o token. 
+Autorização: O sistema checando o que você pode fazer depois de logado. É a validação 
+que garante que um usuario comum não consiga bater numa rota e deletar o banco igual 
+um admin faria. 
+Privilege Escalation: Escalonamento de privilegios. O invasor loga com uma conta de nivel 
+baixo, acha uma falha na regra de negocio e força o sistema a dar poderes de administrador 
+para ele. 
+Lateral Movement: Movimentação lateral. O hacker invade uma maquina mais fraca na 
+rede e usa ela como ponte para ir pulando as defesas internas até chegar nos servidores 
+criticos. 
+C2 Server: Servidor de Comando e Controle. A maquina do atacante que fica escondida na 
+rede mandando ordens e recebendo os dados roubados das maquinas que foram 
+infectadas. 
+Cryptojacking: Injetar um script escondido no site ou no servidor da vitima para usar a 
+CPU e a memoria dela para minerar criptomoeda de graça, gerando custo de nuvem 
+absurdo. 
+Cold Wallet: Carteira fria. Guardar as chaves privadas de criptomoedas em um hardware 
+ou ambiente totalmente desconectado da internet para anular qualquer chance de ataque 
+remoto. 
+Hot Wallet: Carteira quente. Deixar as chaves privadas em um servidor ou app online. 
+Facilita movimentar os fundos para os bots operarem, mas o risco de invasão pelo backend 
+é alto. 
+Seed Phrase: Sequencia de palavras que serve como semente para gerar a chave privada 
+da carteira cripto. Quem tem acesso a essas palavras limpa o saldo da conta na mesma 
+hora. 
+Reentrancy: Falha critica em Smart Contracts. O atacante faz o contrato vulneravel chamar 
+uma função de saque repetidas vezes antes que o sistema tenha tempo de atualizar e zerar 
+o saldo. 
+Oracle Manipulation: Manipulação de oraculo. Enganar a fonte de dados externa que 
+alimenta um Smart Contract na Web3 para forçar o codigo a liquidar operações de trade 
+com o preço errado. 
+Sybil Attack: Um invasor criar milhares de contas ou nos falsos em uma rede 
+descentralizada para tentar ganhar o controle sobre as decisões e validações do sistema. 
+Ataque de 51 Porcento: Quando um grupo de mineradores consegue mais da metade do 
+poder de processamento da blockchain e começa a reescrever o historico de transações a 
+favor deles. 
+Fuzzing: Jogar uma quantidade absurda de dados aleatorios e malformados nas rotas da 
+API para estressar o codigo e ver se ele quebra revelando alguma vulnerabilidade na 
+memoria.
+
+SAST: Analise estatica de segurança. Rodar ferramentas automatizadas no repositorio para 
+ler o codigo fonte e apontar brechas de segurança antes mesmo de você fazer o commit ou 
+o deploy. 
+DAST: Analise dinamica. Atacar a aplicação com ela ja rodando em um ambiente de stage 
+para ver como o sistema se comporta sob fogo real antes de ir para produção. 
+OWASP Top 10: Lista atualizada constantemente com as dez falhas de segurança mais 
+criticas em aplicações web. É a base que todo dev usa para estruturar defesas no backend. 
+CORS: Compartilhamento de recursos entre origens. Regra de segurança do navegador 
+que bloqueia um dominio estranho de fazer requisições para a sua API se você não liberar o 
+IP dele no backend. 
+CSP: Politica de segurança de conteudo. Um header HTTP configurado no servidor que diz 
+pro navegador quais scripts externos têm permissão de carregar, travando injeções de front 
+end. 
+HSTS: Configuração no servidor que obriga o navegador do cliente a usar sempre a 
+conexão segura HTTPS e nunca aceitar trafego HTTP puro sem criptografia. 
+SSL TLS: Protocolos que criam o tunel criptografado entre o cliente e o servidor. Garantem 
+que nenhum invasor no meio da conexão consiga ler o json que esta passando na 
+requisição. 
+Hash Collision: Colisão de hash. Quando dois arquivos totalmente diferentes acabam 
+gerando exatamente o mesmo codigo hash. Uma falha rara mas que quebra a integridade 
+da validação. 
+Rainbow Table: Um banco de dados gigantesco com hashes pre calculados de milhares de 
+senhas comuns, usado por atacantes para quebrar bancos de dados vazados em questão 
+de segundos. 
+KDF: Função de derivação de chave. O algoritmo pesado que a gente usa no backend para 
+gerar o hash da senha consumindo muita CPU, atrasando propositalmente ataques de força 
+bruta. 
+HMAC: Codigo de autenticação baseado em hash. Usado para assinar requisições e 
+garantir que o webhook que bateu na sua API realmente veio de um serviço confiavel 
+usando uma chave secreta. 
+OAuth: Protocolo de autorização padrão de mercado. Permite que o usuario faça login no 
+seu app usando a conta do Google sem precisar passar a senha do Google para o seu 
+banco. 
+SSO: Autenticação unica. O usuario loga apenas uma vez em um painel central seguro e 
+ganha acesso a todos os outros microserviços da empresa sem precisar digitar senha de 
+novo. 
+IAM: Gestão de identidade e acesso. O painel da nuvem onde você cria os usuarios da 
+equipe e define nas regras da arquitetura em quais bancos de dados e instancias cada dev 
+pode mexer. 
+RBAC: Controle de acesso baseado em função. Configurar as permissões da API 
+dependendo do cargo do usuario no banco de dados em vez de ter que liberar permissão 
+rota por rota. 
+Least Privilege: Principio do menor privilegio. A regra de ouro da engenharia de software 
+segura. Cada serviço, container ou dev só deve ter o acesso minimo necessario para rodar 
+a tarefa. 
+ZKP: Prova de conhecimento zero. Conceito criptografico avançado onde uma API 
+consegue provar para outra que possui uma informação valida sem revelar qual é o dado 
+em si. 
+Multi Sig: Multipla assinatura. Um cofre de infraestrutura ou carteira cripto que exige que 
+duas ou mais chaves privadas diferentes aprovem a transação para o contrato executar o 
+envio de fundos. 
+TOCTOU: Tempo de checagem para tempo de uso. Uma falha de concorrencia onde o 
+sistema valida uma permissão, mas o atacante altera o recurso um milissegundo antes da 
+execução final. 
+Directory Traversal: O invasor manipula a URL que bate na API para forçar o servidor a 
+descer os niveis de pastas e ler arquivos sensiveis direto da raiz do sistema operacional. 
+Command Injection: O backend recebe um texto malicioso do usuario e passa isso direto 
+para o terminal do servidor sem tratar. O atacante roda comandos concatenados e toma o 
+controle da maquina. 
+SSRF: Falsificação de requisição do lado do servidor. O invasor engana a sua aplicação 
+para que o seu proprio backend faça uma requisição maliciosa atacando a rede interna da 
+sua empresa. 
+IDOR: Referencia direta insegura. O dev esquece de checar quem esta logado e o atacante 
+simplesmente troca o numero do ID na rota da API para conseguir ler dados da conta de 
+outro cliente. 
+Clickjacking: O atacante esconde a interface real do site embaixo de uma camada invisivel 
+no front end para forçar o usuario a clicar em botões de saque ou troca de senha sem 
+perceber. 
+DNS Spoofing: Invasão que polui o cache do servidor de nomes para redirecionar o trafego 
+que iria pro dominio oficial da sua empresa direto para um servidor falso levantado pelo 
+hacker. 
+ARP Spoofing: Manipular a tabela da rede local fazendo com que os pacotes de dados 
+passem pela maquina do atacante antes de chegarem no roteador original. 
+Shadow IT: Bancos de dados e APIs que outras equipes sobem na nuvem da empresa por 
+conta propria, sem avisar a engenharia principal, criando pontos cegos absurdos na 
+segurança. 
+Threat Modeling: Modelagem de ameaças. O processo de sentar na frente do quadro 
+antes de escrever a primeira linha de codigo e mapear todas as rotas por onde um ataque 
+poderia acontecer. 
+Data Leakage: Vazamento de dados. Quando chaves de API, senhas de banco ou dados 
+de clientes ficam expostos em repositorios publicos do GitHub por erro basico de commit. 
+Obfuscation: Embaralhar a estrutura do codigo no momento do build para dificultar que 
+alguem copie a logica do seu bot ou consiga fazer engenharia reversa no seu front end. 
+Man in the Browser: Um script malicioso que infecta o navegador do usuario e altera 
+silenciosamente o endereço da carteira cripto na exata hora que ele clica para confirmar o 
+envio. 
+Dark Web: Parte profunda da internet usada por atacantes para vender bancos de dados 
+vazados e scripts novos de exploits em mercados paralelos focados em anonimato. 
+Input Validation: Limpar, tipar e validar absolutamente todos os dados que chegam na API 
+antes de mandar para o banco. A barreira principal de qualquer backend contra injeções. 
+Session Hijacking: Roubo de sessão. O atacante consegue copiar o token JWT valido do 
+usuario e usa ele no header da requisição para entrar no sistema sem precisar saber a 
+senha. 
+Air Gap: Estrutura isolada onde um servidor de segurança fica literalmente sem nenhum 
+cabo de rede conectado a internet, armazenando as chaves mais criticas da arquitetura.
+
+CAPTCHA: O filtro na porta da aplicação que analisa o comportamento da requisição para 
+travar scripts automatizados e bots que ficam rodando força bruta nas rotas de login. 
+SIEM: Sistema que puxa e junta os logs de toda a infraestrutura em um painel só para a 
+equipe de segurança cruzar os dados e achar padrões de ataque em tempo real. 
+CORS Misconfiguration: Erro comum do dev no backend de deixar o header de origem 
+aberto com um asterisco, permitindo que qualquer site pirata faça requisições autenticadas 
+para a API. 
+Subdomain Takeover: Esquecer um apontamento de DNS velho na nuvem e o atacante 
+registrar aquele dominio especifico para subir uma pagina falsa se passando pela sua 
+empresa. 
+Click Farm: Galpões cheios de celulares rodando scripts e bots para fraudar engajamento 
+ou criar milhares de contas falsas para derrubar a economia de um app ou airdrop cripto. 
+Criptografia Forte: A base matematica pesada de esconder dados. Não é só dar um base64, 
+é usar algoritmos que levam seculos de poder computacional para serem quebrados na 
+força bruta. 
+Decryption: O processo inverso de pegar o lixo de caracteres ilegivel e usar a chave certa 
+para transformar de volta na string original que a aplicação entende. 
+Ciphertext: O resultado da string depois que ela passou pelo algoritmo de criptografia. É o 
+lixo legivel que vai trafegar pela rede ou ficar salvo nas tabelas do banco. 
+Plaintext: O dado puro antes de ser criptografado. Se você logar isso no terminal em 
+produção com informações sensiveis do cliente, você acabou de quebrar a segurança da 
+aplicação. 
+Public Key: A chave de criptografia que você pode e deve mostrar para qualquer um. No 
+mercado cripto é o endereço publico da sua carteira, onde os bots mandam as moedas. 
+Private Key: A chave mestre que nunca sai do seu servidor ou do hardware isolado. Ela 
+assina e autoriza as transações no banco ou na blockchain. Vazou ela, a conta é zerada no 
+mesmo minuto. 
+SSL Certificate: O arquivo de validação configurado no proxy reverso que prova para o 
+navegador do cliente que o servidor realmente é o original e ativa o cadeado do protocolo 
+seguro. 
+Let's Encrypt: Autoridade certificadora que emite SSL de graça via script no bash. É o 
+padrão que a gente coloca nas esteiras de deploy pra nunca rodar uma API em porta HTTP 
+pura. 
+Vulnerability Scanner: Ferramenta que fica rodando no background varrendo as portas do 
+servidor e as rotas da API procurando brechas conhecidas antes de um invasor achar o 
+furo. 
+Port Scanning: O script automatizado do atacante batendo em todas as portas do IP do seu 
+servidor na AWS pra ver se você esqueceu a porta do SSH aberta ou o banco de dados 
+exposto pra internet. 
+Firewall Rules: As linhas de configuração pesadas que a gente escreve na Cloudflare ou na 
+nuvem dizendo exatamente quais IPs e portas têm autorização para conversar com a nossa 
+infraestrutura. 
+Packet Sniffing: Interceptar os pacotes de rede enquanto eles trafegam pelo cabo ou 
+roteador para tentar ler dados em texto puro que o dev não criptografou no payload da 
+requisição. 
+MAC Spoofing: Mudar o endereço fisico da placa de rede da maquina usando software para 
+fingir ser um computador que já tem autorização e pular o bloqueio do roteador interno da 
+empresa. 
+Phishing Resistant MFA: Autenticação que usa chaves fisicas tipo pendrive que não 
+dependem de digitar numero. Mesmo se o dev logar num painel falso, o atacante não 
+consegue invadir a conta. 
+Biometrics: Usar a leitura de digital ou rosto direto no hardware do cliente antes de assinar a 
+transação no app, adicionando uma barreira fisica absurda contra bots invasores. 
+IAM Roles: Perfis de acesso temporarios na nuvem. Em vez de chumbar senhas no codigo, 
+a nossa API assume a role só pelo segundo que precisa rodar a tarefa e depois perde a 
+autorização na hora. 
+Secrets Management: Cofre digital nativo da nuvem para guardar senhas de banco e 
+chaves de API. O codigo só puxa a chave na memoria no tempo de execução, nunca 
+ficando salvo no repositorio. 
+Environment Variables: As variaveis de ambiente locais do desenvolvedor. A regra basica 
+de segurança é nunca enviar esse arquivo de configuração para o GitHub pra não vazar a 
+chave do banco. 
+API Gateway: A camada que fica na porta de entrada dos microserviços. Recebe as 
+requisições, filtra os bots, barra quem tá fazendo força bruta e roteia o trafego limpo pro 
+backend certo. 
+Webhook Security: Validar a assinatura do payload que bate no endpoint verificando o hash, 
+pra ter certeza que foi a exchange de cripto oficial que enviou o alerta e não um script 
+pirata. 
+Dependency Confusion: Ataque focado em Node e Python. O hacker sobe um pacote 
+malicioso na internet com o mesmo nome das bibliotecas internas da empresa. O build puxa 
+o errado e infecta tudo. 
+Supply Chain Attack: A invasão acontece em uma biblioteca de terceiro famosa que você 
+importou no projeto. O hacker atualiza o pacote com código malicioso e todo mundo que 
+atualiza toma o ataque. 
+Hardcoding Secrets: O erro mais estupido de segurança. É digitar a chave de produção no 
+meio do codigo fonte. Qualquer um que ler o repositorio ou inspecionar o front end rouba a 
+credencial na hora. 
+GitGuardian: Um vigia automatizado plugado no repositorio de codigo. Se algum dev dar 
+push de uma chave de AWS ou token cripto sem querer, ele detecta a estrutura do texto e 
+manda apagar. 
+Threat Intel: Inteligência de ameaças. Monitorar fóruns obscuros para saber as novas 
+logicas de invasão do mercado e preparar a defesa na arquitetura antes de ser o proximo 
+alvo. 
+Incident Response: O plano técnico pré definido do que a engenharia deve fazer quando a 
+API for invadida. Quem corta a rede principal, quem bloqueia os bancos e quem levanta o 
+backup do zero. 
+Disaster Recovery: O script de infraestrutura como codigo que levanta uma copia inteira da 
+sua arquitetura em outra região do planeta assim que o servidor original é derrubado. 
+Backup Incorruptível: Cópia dos bancos de dados salva em discos na nuvem travados de 
+uma forma que nem o usuário root do sistema tem permissão para alterar ou apagar. É a 
+cura pro Ransomware. 
+Phishing Simulation: A equipe de segurança ofensiva mandar e-mails falsos super realistas 
+pro proprio time de desenvolvimento pra ver se alguém clica em link estranho que poderia 
+dar brecha na rede.
+
+Dark Pattern: Desenhar botões ou textos na interface de forma extremamente confusa pra 
+enganar o usuário a aceitar permissões perigosas em contratos inteligentes sem que ele 
+leia o risco real. 
+Typosquatting: O atacante registrar um domínio de internet quase idêntico ao original 
+mudando só uma letra pra roubar o tráfego dos clientes que digitam rápido a URL da 
+carteira cripto. 
+Spear Phishing: Ataque de engenharia super segmentado. O hacker estuda o perfil do CTO 
+ou líder técnico e manda uma comunicação de suporte forjada só pra ele visando as chaves 
+master da infra. 
+Whaling: Focar os ataques de manipulação psicológica exclusivamente nos diretores e 
+peixes grandes que têm permissão direta nas contas bancárias ou cofres cripto da empresa. 
+BGP Hijacking: Sequestro de roteamento bruto na internet. O invasor adultera as tabelas 
+mundiais de roteadores mandando todo o tráfego que deveria ir pra sua API cair nas 
+máquinas do atacante. 
+DNSSEC: Inserir assinaturas com criptografia pesada nos registros do domínio pra garantir 
+que a requisição do usuário não foi interceptada e redirecionada pra um servidor falso no 
+meio do caminho. 
+Rogue Access Point: Plugar fisicamente um roteador falso na infraestrutura da empresa 
+com o mesmo nome de rede oficial pra capturar os pacotes e roubar as sessões de login de 
+quem se conectar. 
+Evil Twin: Igual o ataque anterior mas muito comum em aeroportos. O hacker clona o nome 
+do wi fi público pra roubar dados de desenvolvedores que logam nos servidores da empresa 
+sem ligar a rede privada. 
+VPN Tunneling: Montar um tubo criptografado via software por dentro da conexão normal de 
+internet pra garantir que as rotas da máquina de desenvolvimento batam no servidor de 
+forma invisível. 
+IP Whitelisting: Configuração brutal na nuvem onde o banco de dados só aceita conexão 
+TCP se o IP externo bater com a lista permitida. Qualquer origem que não tiver lá leva 
+descarte sumário na porta. 
+MAC Filtering: Regra na camada de rede física que só aceita placas conhecidas. Sozinho 
+não é uma defesa inquebrável, mas é mais uma camada de atrito para quem tenta 
+movimentar scripts internos. 
+End to End Encryption: Criptografia de ponta a ponta total. O dado sai embaralhado da 
+máquina de origem e o servidor só repassa. Nem o dono do banco de dados no meio 
+consegue ler o que passou na string. 
+Perfect Forward Secrecy: Protocolo que gera uma chave efêmera pra cada requisição 
+individual. Se o hacker furtar a chave privada do servidor no futuro, ele não conseguirá 
+decriptar os dados gravados de ontem. 
+Key Rotation: Scripts que trocam automaticamente as chaves de acesso do banco de dados 
+a cada poucas horas. Inutiliza credenciais que tenham vazado em ataques sem quebrar as 
+rotinas da aplicação. 
+HSM: Módulo de segurança em hardware dedicado exclusivamente a rodar algoritmos e 
+assinar transações na memória física do chip pra não arriscar os vazamentos comuns que 
+acontecem na memória RAM da máquina. 
+TEE: Ambiente de execução super isolado dentro do próprio processador onde as regras 
+cruciais de negócio e finanças operam blindadas de outros softwares do sistema e até do 
+administrador da rede.
+
+Cold Storage: Jogar todo o fluxo financeiro grosso da empresa cripto para carteiras offline 
+guardadas em cofre de banco tradicional, deixando no banco de dados da API somente 
+migalhas pra giro automático dos bots.
+          </pre>
+        </div>
+      </article>
+    </section>
+  </main>
+  <script>
+  (function () {
+    const pre = document.getElementById('glossario');
+    if (!pre) return;
+
+    const raw = pre.textContent; // pega o texto exatamente como está
+    const linhas = raw.split('\n');
+
+    const html = linhas.map(linha => {
+      const idx = linha.indexOf(':');
+      if (idx === -1) {
+        // linha sem ":", mantém igual
+        return linha.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+
+      const termo = linha.slice(0, idx);          // antes dos dois pontos
+      const resto = linha.slice(idx + 1);         // depois dos dois pontos
+
+      const safeTermo = termo.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const safeResto = resto.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+      return `<span class="termo">${safeTermo}:</span><span class="def">${safeResto}</span>`;
+    }).join('\n');
+
+    pre.innerHTML = html;
+  })();
+</script>
+</body>
+</html>
